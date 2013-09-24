@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..", "src")))
+require "simulator"
+
+commands_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "COMMANDS"))
+
+# remove comments and blank line
+commands = File.read(commands_file).split("\n").delete_if{|line| line =~ /^\s*#.*/ || line =~ /^$/ }
+
+Simulator.run! commands
