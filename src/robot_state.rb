@@ -15,10 +15,12 @@ class RobotState
   end
 
   def report
+    return unless ready_for_action?
     @output.printf "%d, %d, %s\n" % [@x, @y, @f]
   end
 
   def move
+    return unless ready_for_action?
     case @f
     when /NORTH/i
       @y = @y + 1
@@ -32,10 +34,17 @@ class RobotState
   end
 
   def left
+    return unless ready_for_action?
     @f = DIRECTION[((DIRECTION.index(@f) + 4) - 1) % 4]
   end
 
   def right
+    return unless ready_for_action?
     @f = DIRECTION[(DIRECTION.index(@f) + 1) % 4]
+  end
+
+  private
+  def ready_for_action?
+    @x && @y && @f 
   end
 end
